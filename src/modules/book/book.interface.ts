@@ -2,12 +2,12 @@ export interface IBook {
   title: string;
   author: string;
   genre:
-    | "fiction"
-    | "non_fiction"
-    | "science"
-    | "history"
-    | "biography"
-    | "fantasy";
+    | "FICTION"
+    | "NON_FICTION"
+    | "SCIENCE"
+    | "HISTORY"
+    | "BIOGRAPHY"
+    | "FANTASY";
   isbn: string;
   description: string;
   copies: number;

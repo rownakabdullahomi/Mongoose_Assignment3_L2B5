@@ -7,26 +7,34 @@ const bookSchema = new Schema<IBook>(
     author: { type: String, required: true, min: 3, max: 100, trim: true },
     genre: {
       type: String,
-      enum: [
-        "fiction",
-        "non_fiction",
-        "science",
-        "history",
-        "biography",
-        "fantasy",
-      ],
+      enum: {
+        values: [
+          "FICTION",
+          "NON_FICTION",
+          "SCIENCE",
+          "HISTORY",
+          "BIOGRAPHY",
+          "FANTASY",
+        ],
+        message: "{Value} is not a valid genre"
+      },
       uppercase: true,
       required: true,
     },
-    isbn: { type: String, required: true, unique: true },
+    isbn: {
+      type: String,
+      required: true,
+      unique: [true, "ISBN must be unique."],
+    },
     description: { type: String, trim: true },
     copies: {
       type: Number,
       required: true,
-      min: 0,
+      min: [0, "Copies must be a positive number"],
       validate: {
         validator: Number.isInteger,
-        message: "{VALUE} is not an integer value",
+        message:
+          "{VALUE} is not an integer value, Copies must be an integer number",
       },
     },
     available: { type: Boolean, default: true },
