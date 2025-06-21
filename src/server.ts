@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import config from "./config";
-import connectDB from "./db/db";
+import { connectDB } from "./db/db";
 import routes from "./routes/routes";
+
 
 
 
