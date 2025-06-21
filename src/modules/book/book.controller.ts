@@ -31,6 +31,97 @@ const createBook = async (req: Request, res: Response) => {
   }
 };
 
+const getBooks = async (req: Request, res: Response) => {
+  try {
+    const book = await Book.find();
+    res.status(200).json({
+      success: true,
+      message: "Books retrieved successfully",
+      data: book,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: "Books can not be retrieved",
+      error: {
+        name: error.name,
+        errors: error.errors,
+      },
+    });
+  }
+};
+
+const getBookById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const book = await Book.findById(id);
+    res.status(200).json({
+      success: true,
+      message: "Book retrieved successfully by id",
+      data: book,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: "Book can not be retrieved",
+      error: {
+        name: error.name,
+        errors: error.errors,
+      },
+    });
+  }
+};
+
+const updateBookById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const body = req.body;
+    const book = await Book.findByIdAndUpdate(id, body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      success: true,
+      message: "Book updated successfully by id",
+      data: book,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: "Book update failed",
+      error: {
+        name: error.name,
+        errors: error.errors,
+      },
+    });
+  }
+};
+
+const deleteBookById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const book = await Book.findByIdAndDelete(id);
+    res.status(200).json({
+      success: true,
+      message: "Book deleted successfully by id",
+      data: book,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: "Book can not be deleted",
+      error: {
+        name: error.name,
+        errors: error.errors,
+      },
+    });
+  }
+};
+
 export const bookController = {
   createBook,
+  getBooks,
+  getBookById,
+  updateBookById,
+  deleteBookById,
 };

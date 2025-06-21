@@ -3,7 +3,11 @@ import { IBook } from "./book.interface";
 
 const bookSchema = new Schema<IBook>(
   {
-    title: { type: String, required: true, trim: true },
+    title: {
+      type: String,
+      required: [true, "Title is Required"],
+      trim: true,
+    },
     author: { type: String, required: true, min: 3, max: 100, trim: true },
     genre: {
       type: String,
@@ -16,7 +20,7 @@ const bookSchema = new Schema<IBook>(
           "BIOGRAPHY",
           "FANTASY",
         ],
-        message: "{Value} is not a valid genre"
+        message: "Please provide a valid genre",
       },
       uppercase: true,
       required: true,
@@ -30,7 +34,7 @@ const bookSchema = new Schema<IBook>(
     copies: {
       type: Number,
       required: true,
-      min: [0, "Copies must be a positive number"],
+      min: [0, "Copies must be a positive number, got {VALUE}"],
       validate: {
         validator: Number.isInteger,
         message:
