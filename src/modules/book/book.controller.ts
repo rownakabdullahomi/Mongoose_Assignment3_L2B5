@@ -62,7 +62,7 @@ const getBookById = async (req: Request, res: Response) => {
         data: book,
       });
     } else {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: "Book not found",
       });
@@ -87,18 +87,19 @@ const updateBookById = async (req: Request, res: Response) => {
       new: true,
       runValidators: true,
     });
-    if (book) {
-      res.status(200).json({
-        success: true,
-        message: "Book updated successfully by id",
-        data: book,
-      });
-    } else {
-      return res.status(404).json({
+
+    if (!book) {
+      res.status(404).json({
         success: false,
         message: "Book not found",
       });
     }
+
+    res.status(200).json({
+      success: true,
+      message: "Book updated successfully by id",
+      data: book,
+    });
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -115,18 +116,19 @@ const deleteBookById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const book = await Book.findByIdAndDelete(id);
-    if (book) {
-      res.status(200).json({
-        success: true,
-        message: "Book deleted successfully by id",
-        data: book,
-      });
-    } else {
-      return res.status(404).json({
+
+    if (!book) {
+      res.status(404).json({
         success: false,
         message: "Book not found",
       });
     }
+
+    res.status(200).json({
+      success: true,
+      message: "Book deleted successfully by id",
+      data: book,
+    });
   } catch (error: any) {
     res.status(500).json({
       success: false,
