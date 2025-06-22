@@ -12,10 +12,11 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use("/api", routes_1.default);
+(0, db_1.connectDB)();
 app.listen(config_1.default.port, () => {
-    (0, db_1.connectDB)();
     console.log(`⚡ Server is running on port: ${config_1.default.port}.`);
 });
 app.get("/", (req, res) => {
     res.send({ success: true, message: "⚡ Welcome to library server.." });
 });
+// library-management-backend-teal.vercel.app
