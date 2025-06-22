@@ -60,6 +60,19 @@ bookSchema.pre("validate", function (next) {
   next();
 });
 
+bookSchema.post("save", function (doc, next) {
+  console.log(`📚 New book created: ${doc.title} (${doc._id})`);
+  next();
+});
+
+bookSchema.post("findOneAndUpdate", function (doc, next) {
+  if (doc) {
+    console.log(`✅ Book updated: ${doc.title} (${doc._id})`);
+  }
+  next();
+});
+
+
 
 bookSchema.static(
   "checkAndUpdateStock",

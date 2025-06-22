@@ -22,7 +22,7 @@ const createBook = async (req: Request, res: Response) => {
 
     res.status(400).json({
       success: false,
-      message: "Validation Failed",
+      message: "Filed to create book",
       error: {
         name: error.name,
         message: error.message,
@@ -34,11 +34,22 @@ const createBook = async (req: Request, res: Response) => {
 
 const getBooks = async (req: Request, res: Response) => {
   try {
-    const book = await Book.find();
+    const filter = req.query.filter?.toString();
+    const sortBy = req.query.sortBy?.toString() || "createdAt";
+    const sortOrder = req.query.sort === "asc" ? 1 : -1;
+    const limit = parseInt(req.query.limit as string) || 10;
+
+    const query = filter ? { genre: filter } : {};
+
+    const books = await Book.find(query)
+      .sort({ [sortBy]: sortOrder })
+      .limit(limit);
+
+    // const book = await Book.find();
     res.status(200).json({
       success: true,
       message: "Books retrieved successfully",
-      data: book,
+      data: books,
     });
   } catch (error: any) {
     res.status(500).json({
