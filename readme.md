@@ -49,7 +49,7 @@ It supports operations for managing books and borrow records in a digital librar
 
 ```bash
 git clone https://github.com/rownakabdullahomi/Mongoose_Assignment3_L2B5.git
-cd library-management-api
+cd Mongoose_Assignment3_L2B5
 ```
 
 ### 2. Install Dependencies
