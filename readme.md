@@ -1,4 +1,4 @@
-# ![Mongoose](https://i.ibb.co/Kjy5hYcY/mongoose.png)
+# ![Mongoose](https://i.ibb.co/R4g9L7Bt/mongoose.png)
 
 # 📚 Library Management API (Express + Mongoose + TypeScript)
 
