@@ -14,7 +14,15 @@ app.use(express.json());
 
 app.use("/api", routes);
 
+
 app.listen(config.port, ()=>{
     connectDB();
     console.log(`⚡ Server is running on port: ${config.port}.`);
 })
+
+app.get("/", (req, res)=>{
+    res.send({success: true, message: "⚡ Welcome to library server.."});
+})
+
+
+// library-management-backend-teal.vercel.app

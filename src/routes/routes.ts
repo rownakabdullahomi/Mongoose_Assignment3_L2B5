@@ -10,14 +10,4 @@ routes.use("/borrow", borrowRoutes);
 
 
 
-
-
-
-
-
-
-routes.get("/", (req, res)=>{
-    res.json({success: true, message: "⚡ Welcome to library server.."});
-})
-
 export default routes;
