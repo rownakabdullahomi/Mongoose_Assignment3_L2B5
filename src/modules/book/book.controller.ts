@@ -25,6 +25,7 @@ const createBook = async (req: Request, res: Response) => {
       message: "Validation Failed",
       error: {
         name: error.name,
+        message: error.message,
         errors: error.errors,
       },
     });
@@ -106,6 +107,7 @@ const updateBookById = async (req: Request, res: Response) => {
       message: "Book update failed",
       error: {
         name: error.name,
+        message: error.message,
         errors: error.errors,
       },
     });

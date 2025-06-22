@@ -6,6 +6,7 @@ const createBorrow = async (req: Request, res: Response) => {
   try {
     const body = req.body;
 
+    // ✅ Try to update stock using static method
     const book = await Book.checkAndUpdateStock(body.book, body.quantity);
     body.book = book;
 
@@ -37,14 +38,43 @@ const createBorrow = async (req: Request, res: Response) => {
     });
   }
 };
+
 const getBorrows = async (req: Request, res: Response) => {
   try {
-    const borrow = await Borrow.find();
+    const summary = await Borrow.aggregate([
+      {
+        $group: {
+          _id: "$book",
+          totalQuantity: { $sum: "$quantity" },
+        },
+      },
+      {
+        $lookup: {
+          from: "books", // 👈 the MongoDB collection name (lowercase plural of model)
+          localField: "_id",
+          foreignField: "_id",
+          as: "bookDetails",
+        },
+      },
+      {
+        $unwind: "$bookDetails",
+      },
+      {
+        $project: {
+          _id: 0,
+          totalQuantity: 1,
+          book: {
+            title: "$bookDetails.title",
+            isbn: "$bookDetails.isbn",
+          },
+        },
+      },
+    ]);
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       message: "Borrowed books summary retrieved successfully",
-      data: borrow,
+      data: summary,
     });
   } catch (error: any) {
     res.status(500).json({
@@ -57,6 +87,7 @@ const getBorrows = async (req: Request, res: Response) => {
     });
   }
 };
+
 
 export const borrowController = {
   createBorrow,

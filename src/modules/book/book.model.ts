@@ -11,19 +11,8 @@ const bookSchema = new Schema<IBook, BookStaticMethod>(
     author: { type: String, required: true, min: 3, max: 100, trim: true },
     genre: {
       type: String,
-      enum: {
-        values: [
-          "FICTION",
-          "NON_FICTION",
-          "SCIENCE",
-          "HISTORY",
-          "BIOGRAPHY",
-          "FANTASY",
-        ],
-        message: "Please provide a valid genre",
-      },
-      uppercase: true,
       required: true,
+      trim: true,
     },
     isbn: {
       type: String,
@@ -49,7 +38,28 @@ const bookSchema = new Schema<IBook, BookStaticMethod>(
   }
 );
 
-// book.model.ts
+bookSchema.pre("validate", function (next) {
+  const allowedGenres = [
+    "FICTION",
+    "NON_FICTION",
+    "SCIENCE",
+    "HISTORY",
+    "BIOGRAPHY",
+    "FANTASY",
+  ];
+
+  if (this.genre) {
+    this.genre = this.genre.toUpperCase(); 
+
+    if (!allowedGenres.includes(this.genre)) {
+      const error = new Error(`${this.genre} is not a valid genre`);
+      return next(error);
+    }
+  }
+
+  next();
+});
+
 
 bookSchema.static(
   "checkAndUpdateStock",
