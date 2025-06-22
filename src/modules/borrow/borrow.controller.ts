@@ -50,7 +50,7 @@ const getBorrows = async (req: Request, res: Response) => {
       },
       {
         $lookup: {
-          from: "books", // 👈 the MongoDB collection name (lowercase plural of model)
+          from: "books", 
           localField: "_id",
           foreignField: "_id",
           as: "bookDetails",

@@ -5,10 +5,7 @@ import { connectDB } from "./db/db";
 import routes from "./routes/routes";
 
 
-
-
 const app = express();
-
 app.use(cors());
 app.use(express.json());
 
@@ -25,4 +22,6 @@ app.get("/", (req, res)=>{
 })
 
 
-// library-management-backend-teal.vercel.app
+// Live Link: library-management-backend-teal.vercel.app
+// Video Link: 
+// https://drive.google.com/file/d/1owDXX56YCol4Zt4DKzb8mtxMgR-DnEe1/view?usp=sharing
